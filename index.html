@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+    <link rel="stylesheet" href="output.css" />
+    <title>Frontend Mentor | Tip calculator app</title>
+
+    <style>
+      .attribution {
+        font-size: 11px;
+        text-align: center;
+      }
+      .attribution a {
+        color: hsl(228, 45%, 44%);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-Grey-200 max-w-4xl mx-auto grid place-content-center min-h-screen font-[Space_Mono] font-bold"
+  >
+    <div class="flex justify-center my-10 md:mt-0 md:mb-20">
+      <img src="images/logo.svg" alt="" />
+    </div>
+    <!--  -->
+    <form action="" id="tipForm" novalidate>
+      <section class="bg-white grid md:grid-cols-2 gap-10 p-8 rounded-2xl">
+        <main class="space-y-8">
+          <!-- bill -->
+          <div>
+            <label for="bill">
+              <div class="flex justify-between">
+                <h1 class="text-Grey-500 mb-1">Bill</h1>
+                <p id="billError" class="text-red-300 hidden">Can't be zero</p>
+              </div>
+              <div class="relative">
+                <input
+                  name="bill"
+                  id="bill"
+                  inputmode="decimal"
+                  required
+                  class="bg-Grey-50 w-full py-2 px-4 placeholder:text-right text-2xl placeholder:text-2xl rounded-md text-right border-2 border-transparent focus:outline-none focus:border-Green-400 cursor-pointer text-Green-900"
+                  type="number"
+                  placeholder="0"
+                />
+                <div class="absolute inset-0 left-4 flex items-center w-fit">
+                  <img src="images/icon-dollar.svg" alt="" />
+                </div>
+              </div>
+            </label>
+          </div>
+          <!-- tip -->
+          <div>
+            <h1 class="text-Grey-500 mb-4">Select Tip %</h1>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3.5 text-2xl">
+              <button
+                type="button"
+                data-tip="5"
+                class="tip-btn bg-Green-900 cursor-pointer hover:bg-Green-400/70 hover:text-Green-900 text-white p-2 rounded-md"
+              >
+                5%
+              </button>
+              <button
+                type="button"
+                data-tip="10"
+                class="tip-btn bg-Green-900 cursor-pointer hover:bg-Green-400/70 hover:text-Green-900 text-white p-2 rounded-md"
+              >
+                10%
+              </button>
+              <button
+                type="button"
+                data-tip="15"
+                class="tip-btn bg-Green-900 cursor-pointer hover:bg-Green-400/70 hover:text-Green-900 text-white p-2 rounded-md"
+              >
+                15%
+              </button>
+              <button
+                type="button"
+                data-tip="25"
+                class="tip-btn bg-Green-900 cursor-pointer hover:bg-Green-400/70 hover:text-Green-900 text-white p-2 rounded-md"
+              >
+                25%
+              </button>
+              <button
+                type="button"
+                data-tip="50"
+                class="tip-btn bg-Green-900 cursor-pointer hover:bg-Green-400/70 hover:text-Green-900 text-white p-2 rounded-md"
+              >
+                50%
+              </button>
+
+              <input
+                id="customTip"
+                class="bg-Grey-50 p-2 rounded-md text-right placeholder:text-center border-2 border-transparent focus:outline-none focus:border-Green-400 cursor-pointer text-Green-900"
+                inputmode="numeric"
+                type="number"
+                placeholder="Custom"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="numPeople">
+              <div class="flex justify-between">
+                <h1 class="text-Grey-500 mb-1">Number of People</h1>
+                <p id="numPeopleError" class="text-red-300 hidden">
+                  Can't be zero
+                </p>
+              </div>
+              <div class="relative">
+                <input
+                  name="numPeople"
+                  id="numPeople"
+                  required
+                  class="bg-Grey-50 w-full py-2 px-4 placeholder:text-right text-2xl placeholder:text-2xl rounded-md text-right border-2 border-transparent focus:outline-none focus:border-Green-400 cursor-pointer text-Green-900"
+                  type="number"
+                  placeholder="0"
+                />
+                <div class="absolute inset-0 left-4 flex items-center w-fit">
+                  <img src="images/icon-person.svg" alt="" />
+                </div>
+              </div>
+            </label>
+          </div>
+        </main>
+        <!--  -->
+        <main
+          class="bg-Green-900 rounded-2xl p-6 md:p-8 flex flex-col justify-between"
+        >
+          <div class="space-y-8">
+            <div class="flex justify-between items-center">
+              <h1 class="text-Grey-200">
+                Tip Amount
+                <p class="text-Grey-500">/ person</p>
+              </h1>
+              <p class="text-Green-400 text-3xl md:text-5xl">
+                $<span id="tipPerPerson">0.00</span>
+              </p>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <h1 class="text-Grey-200">
+                Total
+                <p class="text-Grey-500">/ person</p>
+              </h1>
+              <p class="text-Green-400 text-3xl md:text-5xl">
+                $<span id="totalPerPerson">0.00</span>
+              </p>
+            </div>
+          </div>
+
+          <button
+            id="reset"
+            class="bg-Grey-500 w-full rounded p-3 uppercase text-Green-900 hover:bg-Green-400/70 cursor-pointer mt-10"
+            type="reset"
+          >
+            Reset
+          </button>
+        </main>
+      </section>
+    </form>
+    <div class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+        >Frontend Mentor</a
+      >. Coded by <a href="#">Your Name Here</a>.
+    </div>
+    <!--  -->
+    <script>
+      const form = document.getElementById("tipForm");
+      const billInput = document.getElementById("bill");
+      const peopleInput = document.getElementById("numPeople");
+      const customTipInput = document.getElementById("customTip");
+      const tipButtons = document.querySelectorAll(".tip-btn");
+      const tipPerPersonEl = document.getElementById("tipPerPerson");
+      const totalPerPersonEl = document.getElementById("totalPerPerson");
+      const resetBtn = document.getElementById("reset");
+
+      let tipPercent = 0;
+
+      // Stop form submission completely
+      form.addEventListener("submit", (e) => e.preventDefault());
+
+      // Tip button logic + active highlight
+      tipButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          tipPercent = Number(btn.dataset.tip);
+          customTipInput.value = "";
+
+          tipButtons.forEach((b) => b.classList.remove("bg-teal-800"));
+          btn.classList.add("bg-teal-800");
+
+          calculate();
+        });
+      });
+
+      // Custom tip
+      customTipInput.addEventListener("input", () => {
+        tipPercent = Number(customTipInput.value);
+        tipButtons.forEach((b) => b.classList.remove("bg-teal-800"));
+        calculate();
+      });
+
+      // Recalculate on input
+      [billInput, peopleInput].forEach((input) =>
+        input.addEventListener("input", calculate),
+      );
+
+      // Validate number of people
+      peopleInput.addEventListener("input", () => {
+        const numPeopleError = document.getElementById("numPeopleError");
+        if (peopleInput.value === "" || Number(peopleInput.value) === 0) {
+          numPeopleError.classList.remove("hidden");
+          peopleInput.classList.remove("border-transparent");
+          peopleInput.classList.remove("focus:border-Green-400");
+          peopleInput.classList.add("border-red-300");
+        } else {
+          numPeopleError.classList.add("hidden");
+          peopleInput.classList.add("border-transparent");
+          peopleInput.classList.add("focus:border-Green-400");
+          peopleInput.classList.remove("border-red-300");
+        }
+      });
+
+      function calculate() {
+        const bill = Number(billInput.value);
+        const people = Number(peopleInput.value);
+
+        if (bill <= 0 || people <= 0 || tipPercent <= 0) {
+          tipPerPersonEl.textContent = "0.00";
+          totalPerPersonEl.textContent = "0.00";
+          return;
+        }
+
+        const totalTip = bill * (tipPercent / 100);
+        tipPerPersonEl.textContent = (totalTip / people).toFixed(2);
+        totalPerPersonEl.textContent = ((bill + totalTip) / people).toFixed(2);
+      }
+
+      // Reset
+      resetBtn.addEventListener("click", () => {
+        billInput.value = "";
+        peopleInput.value = "";
+        customTipInput.value = "";
+        tipPercent = 0;
+
+        tipButtons.forEach((b) => b.classList.remove("bg-teal-800"));
+        tipPerPersonEl.textContent = "0.00";
+        totalPerPersonEl.textContent = "0.00";
+      });
+    </script>
+  </body>
+</html>
